@@ -1,19 +1,19 @@
 一、原理
-Playwright是微软开发的Web应用的自动化测试框架，面向自动化测试。
-自动化程序（Playwright客户端库）→浏览器驱动（由Playwright项目提供）←→浏览器（比如chrome、firefox）
+    Playwright是微软开发的Web应用的自动化测试框架，面向自动化测试。
+    自动化程序（Playwright客户端库）→浏览器驱动（由Playwright项目提供）←→浏览器（比如chrome、firefox）
 
 二、安装
-pip install playwright
-playwright install（安装浏览器chrome、firefox、webkit）
-或者playwright install chromium（安装浏览器chrome）
-浏览器安装在c盘用户文件目录下。
+    pip install playwright
+    playwright install（安装浏览器chrome、firefox、webkit）
+    或者playwright install chromium（安装浏览器chrome）
+    浏览器安装在c盘用户文件目录下。
 
 三、简单示例
-from playwright.sync_api import sync_playwright  //sync：同步api
+    from playwright.sync_api import sync_playwright  //sync：同步api
 
-input('1....')
-# 启动 playwright driver 进程
-p = sync_playwright().start()
+    input('1....')
+    # 启动 playwright driver 进程
+    p = sync_playwright().start()
 
 input('2....')
 # 启动浏览器，返回 Browser 类型对象
