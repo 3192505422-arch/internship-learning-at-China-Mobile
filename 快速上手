@@ -1,8 +1,7 @@
-# internship-learning-at-China-Mobile
+一、原理
+Playwright 是微软开发的 Web 应用的自动化测试框架，面向自动化测试。
+自动化程序（Playwright 客户端库）→浏览器驱动（由 Playwright 项目提供）→浏览器
 
-## 一、原理
-- Playwright 是微软开发的 Web 应用的自动化测试框架，面向自动化测试。
-- 自动化程序（Playwright 客户端库）→浏览器驱动（由 Playwright 项目提供）→浏览器
 二、安装
 pip install playwright
 playwright install（安装浏览器chrome、firefox、webkit）
