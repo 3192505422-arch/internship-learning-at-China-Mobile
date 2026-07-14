@@ -31,3 +31,13 @@ page.locator('.animal')//选择class属性值为animal的元素动物
 print(lct.first.inner_text(), lct.last.inner_text())
 也可以通过nth方法，获取指定次序的元素：lct=page.locator('.plant')
 print(lct.nth(1).inner_text())
+
+五、元素内部定位
+可以通过Locator对象调用locator方法：
+lct = page.locator('#bottom')
+#在#bottom 对应元素的范围内 寻找标签名为 span 的元素。
+eles = lct.locator('span').all()
+for e in eles:
+    print(e.inner_text())
+
+六、选择子元素和后代元素
