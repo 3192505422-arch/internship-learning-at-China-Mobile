@@ -9,7 +9,7 @@ playwright install（安装浏览器chrome、firefox、webkit）
 浏览器安装在c盘用户文件目录下。
 
 三、简单示例
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright  //sync：同步api
 
 input('1....')
 # 启动 playwright driver 进程
@@ -17,7 +17,7 @@ p = sync_playwright().start()
 
 input('2....')
 # 启动浏览器，返回 Browser 类型对象
-browser = p.chromium.launch(headless=False)
+browser = p.chromium.launch(headless=False)  //headless=False：看到浏览器界面，browser:控制浏览器，如果要测试别的浏览器，写清楚路径（详见下）
 
 # 创建新页面，返回 Page 类型对象
 page = browser.new_page()
@@ -39,3 +39,13 @@ browser.close()
 input('4....')
 # 关闭 playwright driver 进程
 p.stop()
+
+可以通过参数 executable_path 指定使用安装的其它浏览器
+# 加上 executable_path参数，注意内核
+browser = p.chromium.launch(headless=False,
+  executable_path='c:\Program Files\Google\Chrome\Application\chrome.exe')
+
+四、自动化代码助手
+Playwright 内置了 代码助手 的功能，可以帮我们产生 自动化代码
+playwright codegen  //启动代码助手
+注意这个只能作为助手，它主要是记录人对页面的输入，并不能取代人自己写代码，特别是那些  获取页面上信息  的代码
