@@ -1,4 +1,4 @@
-# 一、原理
+一、原理
 Playwright 是微软开发的 Web 应用的自动化测试框架，面向自动化测试。
 自动化程序（Playwright 客户端库）→浏览器驱动（由 Playwright 项目提供）→浏览器
 
@@ -46,6 +46,10 @@ browser = p.chromium.launch(headless=False,
   executable_path='c:\Program Files\Google\Chrome\Application\chrome.exe')
 
 四、自动化代码助手
-Playwright 内置了 代码助手 的功能，可以帮我们产生 自动化代码
+Playwright 内置了代码助手的功能，可以帮我们产生自动化代码
 playwright codegen  //启动代码助手
 注意这个只能作为助手，它主要是记录人对页面的输入，并不能取代人自己写代码，特别是那些获取页面上信息的代码
+*根据deepseek老师的指导可以直接在cmd中使用python -m playwright codegen来启动自动化代码助手
+
+五、跟踪功能
+启用跟踪功能后，可以在执行自动化后，通过记录的跟踪数据文件，回看自动化过程中的每个细节。
