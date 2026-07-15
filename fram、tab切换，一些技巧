@@ -52,3 +52,39 @@ print(pg.title())
 （2）关闭网页窗口：调用该窗口对应的Page对象的 close 方法。
 
 三、冻结界面
+在 开发者工具栏 console 里面执行如下js代码：
+setTimeout(function(){debugger}, 5000)//表示在 5000毫秒后，执行 debugger 命令，界面被冻住，不管怎么点击界面都不会触发事件。
+
+四、截屏
+要 整个网页 截屏，使用 Page 对象的 screenshot 方法：
+# 截屏当前页面可见内容，保存到当前工作目录下的ss1.png文件中
+page.screenshot(path='ss1.png')
+
+# 截屏 完整页面，页面内容长度超过窗口高度时，包括不可见部分。
+page.screenshot(path='ss1.png', full_page=True)
+只对  某个元素的显示内容  进行截屏，使用 Locator 对象的 screenshot 方法：
+page.locator('input[type=file]').screenshot(path='ss2.png')
+
+五、拖拽
+可以使用Page对象的 drag_and_drop 方法：
+# 选中  `span#t1`  文本内容
+page.locator('#t1').select_text()
+
+# 拖拽到 输入框  `[placeholder="captcha"]` 里面去
+page.drag_and_drop('#t1', '[placeholder="captcha"]')
+如果被拖动元素的Locator对象已经产生，可以直接调用其 drag_to 方法进行拖动：
+# 选中  `span#t1`  文本内容
+lc = page.locator('#t1')
+
+lc.select_text()
+
+# 拖拽到 输入框  `[placeholder="captcha"]` 里面去
+lc.drag_to(page.locator('[placeholder="captcha"]'))
+
+六、弹出对话框
+（1）Alert弹出框：目的是显示通知信息，只需用户看完信息后，点击 OK（确定） 就可以了。
+处理函数中被回调时，会传入  Dialog 对象：
+accept 方法作用等同于点击确定按钮
+dismiss 方法作用等同于点击取消按钮
+message 属性就是对话框界面的提示信息字符串
+（2）Confirm弹出框：目的是让用户确认是否要进行某个操作。
