@@ -1,0 +1,54 @@
+一、frame切换
+一些元素在一个叫iframe元素中，这个 iframe 元素非常的特殊， 在html语法中， frame  元素 或者 iframe 元素的内部 会包含一个 被嵌入的 另一份html文档。
+在我们使用 Playwright 打开一个网页时， 操作范围 缺省是当前的 html ， 并不包含被嵌入的html文档里面的内容，如果我们要 定位/操作 被嵌入的 html 文档 中的元素， 就必须  切换操作范围   到 被嵌入的文档中。
+使用 Page 或者 Locator 对象的  frame_locator 方法定位到你要操作的frame，这个 方法会产生一个  FrameLocator 对象，后续的定位，就使用这个对象，在其内部进行定位。
+# 产生一个  FrameLocator 对象
+frame = page.frame_locator("iframe[src='sample1.html']")//frame_locator  方法的参数是 css 或者 xpath selector
+
+# 再 在其内部进行定位
+lcs = frame.locator('.plant').all()
+for lc in lcs:
+    print(lc.inner_text(timeout=1000))
+
+二、窗口切换
+我们用 Playwright 写自动化程序 在新窗口里面 打开一个新网址， 并且去自动化操作新窗口里面的元素，即使新窗口打开了， 这时候，我们的 page 变量对应的 还是老窗口，自动化操作也还是在老窗口进行。
+这时，需要使用 BrowserContext 对象：
+from playwright.sync_api import sync_playwright
+pw = sync_playwright().start()
+
+browser = pw.chromium.launch(headless=False)
+
+# 创建 BrowserContext 对象
+context = browser.new_context()
+
+# 通过context 创建page
+page = context.new_page() 
+
+page.goto("https://www.byhy.net/cdn2/files/selenium/sample3.html")
+
+# 点击链接，打开新窗口
+page.locator("a").click()
+
+# 等待2秒， 不能用 time.sleep
+page.wait_for_timeout(2000)
+
+# pages属性是 所有窗口对应Page对象的列表
+newPage = context.pages[1]
+
+# 打印新网页窗口标题
+print(newPage.title())
+
+# 打印老网页窗口标题
+print(page.title())
+BrowserContext对象有个  pages  属性，这是一个列表，里面依次为所有窗口对应Page对象，所以可以通过不同的page对象操作对应的不同窗口
+如果自动化打开了很多链接窗口，不知道目标窗口的次序号，这时可以根据标题栏定位到要操作的page：
+for pg in  context.pages:
+    # 得到该窗口的标题栏字符串，判断是不是我们要操作的那个窗口
+    if '必应' in pg.title():
+        break
+
+print(pg.title())
+（1）设置当前tab：如果当前界面有很多窗口，要把某个窗口作为当前活动窗口显示出来，可以调用该窗口对应的Page对象的 bring_to_front 方法。
+（2）关闭网页窗口：调用该窗口对应的Page对象的 close 方法。
+
+三、冻结界面
