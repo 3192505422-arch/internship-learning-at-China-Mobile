@@ -157,5 +157,3 @@ print(element.inner_text())
 > - `set_default_timeout(10)` — 将元素等待超时改为 10 毫秒（慎用，太短容易超时报错）
 
 ---
-
-> 🔍 **XPath、Role、视觉 定位方法** — 由 Echo 🔥 美化整理
