@@ -23,5 +23,3 @@ Python + Playwright → Web 自动化测试
 ```
 
 ---
-
-> ✨ 由 Echo 🔥 美化整理
