@@ -1,0 +1,81 @@
+一、Xpath定位
+XPath(XML Path Language)是由国际标准化组织W3C指定的，用来在XML和HTML文档中选择节点的语言。
+Playwright的Locator参数也可以使用Xpath语法：element = page.locator('//*[@href="http://www.miitbeian.gov.cn"]')（相当于：element = page.locator('[href="http://www.miitbeian.gov.cn"]')）
+
+二、根据文本内容定位
+有时获取页面包含某些文字的元素用css selector不好选择，可以使用 Page/Locator 对象的get_by_text方法
+比如，获取所有文本包含11的元素：
+from playwright.sync_api import sync_playwright
+p = sync_playwright().start()
+
+browser = p.chromium.launch(headless=False)
+page = browser.new_page()
+page.goto("https://www.byhy.net/cdn2/files/selenium/stock1.html")
+
+# 根据文本内容选择所有元素
+elements = page.get_by_text('11').all()
+
+# 打印出元素文本
+for ele in elements:
+    print(ele.inner_text())
+包含内容以11结尾，可以使用正则表达式对象作为参数：
+import re
+elements = page.get_by_text(re.compile("11$")).all()
+（正则表达式 11$ 表示以 11 结尾）
+
+三、根据元素role定位
+Playwright支持根据元素角色role）定位
+ARIA为web元素增加了一些Role相关的属性定义，方便辅助技术工具识别和操作。
+（ARIA为web元素增加了一些Role相关的属性定义，方便辅助技术工具识别和操作。
+比如：当我们完成系统注册时，弹出提示信息，html通常会这样
+<div class="alert-message">
+  您已成功注册，很快您将收到一封确认电子邮件
+</div>
+但是，这样写的内容不方便辅助技术识别出这是一个重要的信息，需要读给用户听，所以可以加上ARIA role属性设置：
+<div class="alert-message" role="alert">
+  您已成功注册，很快您将收到一封确认电子邮件
+</div>）
+所以直接定位该元素：
+# 根据 role 定位
+lc = page.get_by_role('alert')
+# 打印元素文本
+print(lc.inner_text())
+有些特定语义元素被ARIA规范认定为自身就包含ARIA role信息，并不需要我们明显的加上ARIA role属性设置。
+ARIA的规则比较复杂，我们可以使用Playwright的代码助手codegen，代码助手产生代码时，能使用role定位的，会优先使用 role 定位。
+召唤代码助手：playwright codegen
+
+三、其它用户视觉定位
+下面4种定位，可以通过代码助手产生，其实也完全可以用css selector定位替代。
+1、根据元素placeholder定位
+2、根据元素关联的label定位
+3、根据元素的all text定位
+4、根据元素title定位
+
+四、缺省等待时间
+Playwright中，当我们定位元素对元素进行操作（比如 click, fill），如果当时根据定位条件，找不到这个元素，Playwright并不会立即抛出错误，而是缺省等待元素时间为30秒，在30秒内如果元素出现了，就立即操作成功返回。
+如果，我们想修改缺省等待时间，可以使用BrowserContext对象：
+from playwright.sync_api import sync_playwright
+
+p = sync_playwright().start()
+browser = p.chromium.launch(headless=False)
+page = browser.new_page()
+page.goto("https://www.byhy.net/cdn2/files/selenium/stock1.html")
+page.locator('#kw').fill('通讯\n')
+page.locator('#go').click()
+element = page.locator("[id='1']")
+
+print(element.inner_text())
+修改为：
+from playwright.sync_api import sync_playwright
+p = sync_playwright().start()
+
+browser = p.chromium.launch(headless=False, slow_mo=50)
+context = browser.new_context()
+context.set_default_timeout(10) #修改缺省等待时间为10毫秒
+page = context.new_page() # 通过context 创建Page对象
+page.goto("https://www.byhy.net/cdn2/files/selenium/stock1.html")
+page.locator('#kw').fill('通讯\n')
+page.locator('#go').click()
+
+element = page.locator("[id='1']")
+print(element.inner_text())
