@@ -41,3 +41,19 @@ for e in eles:
     print(e.inner_text())
 
 六、选择子元素和后代元素
+HTML中，元素内部可以包含其他元素。
+如果元素1是元素2的直接子元素：元素1>元素2
+也支持多层级选择：元素1>元素2>元素3>元素4（最终选择元素4）
+如果元素2是元素1的后代元素：元素1  元素2
+也支持多层级选择：元素1  元素2  元素3  元素4（最终选择元素4）
+
+七、根据属性选择
+1、id、class 都是web元素的属性，因为它们是很常用的属性，所以css选择器专门提供了根据id、class选择的语法。
+2、其他属性：css选择器支持通过任何属性来选择元素，语法是用一个方括号[]。
+比如<a href="http://www.miitbeian.gov.cn">苏ICP备88885574号</a>里面根据href选择上面的a元素：[href="http://www.miitbeian.gov.cn"]（选择属性href值为http://www.miitbeian.gov.cn的元素
+前面可以加上标签名的限制：a[href="http://www.miitbeian.gov.cn"] 表示选择所有标签名为a，且属性href值为http://www.miitbeian.gov.cn的元素。
+选择属性值包含某个字符串的元素：a[href*="miitbeian"]（选择a节点，里面的href属性包含了 miitbeian 字符串）
+选择属性值以某个字符串开头的元素：a[href^="http"]（选择a节点，里面的href属性以gov.cn结尾）
+指定选择的元素要同时具有多个属性的限制：div[class=misc][ctype=gun]
+
+八、选择语法联合使用
