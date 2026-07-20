@@ -310,5 +310,3 @@ if __name__ == "__main__":
 ```
 
 ---
-
-> 🗄️ **快速上手 Python 接 MySQL** — 由 Echo 🔥 美化整理
