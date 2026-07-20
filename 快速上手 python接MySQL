@@ -1,0 +1,229 @@
+以学生登记表为例
+一、在MySQL中创建数据库和表
+windows+r打开cmd
+-- 1. 登录MySQL（输入你的密码）
+mysql -u root -p
+
+-- 2. 创建数据库（叫 student_db 吧）
+CREATE DATABASE student_db;
+
+-- 3. 切换到该数据库
+USE student_db;
+
+-- 4. 创建学生表（包含id、姓名、年龄、班级）
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    age INT,
+    class VARCHAR(20)
+);
+
+-- 5. 插入几条测试数据
+INSERT INTO students (name, age, class) VALUES ('张三', 20, '计算机1班');
+INSERT INTO students (name, age, class) VALUES ('李四', 22, '计算机2班');
+
+-- 6. 查询一下确认数据
+SELECT * FROM students;
+
+-- 7. 退出MySQL（输入exit或按Ctrl+C）
+exit;
+
+二、安装python驱动
+在cmd中执行：
+pip install pymysql
+
+三、编写Python程序
+import pymysql
+
+
+class StudentManager:
+    def __init__(self):
+        """初始化数据库连接"""
+        # 配置数据库连接信息（根据你的实际情况修改）
+        self.connection = pymysql.connect(
+            host='localhost',  # 数据库在本机
+            user='root',  # 你的MySQL用户名
+            password='123456',  # 你的MySQL密码（改成你自己的）
+            database='student_db',  # 刚创建的数据库名
+            charset='utf8mb4'  # 支持中文
+        )
+        self.cursor = self.connection.cursor()
+        print("数据库连接成功！")
+
+    def close(self):
+        """关闭连接"""
+        self.cursor.close()
+        self.connection.close()
+        print("连接已关闭")
+
+    def add_student(self, name, age, class_name):
+        """添加学生数据"""
+        try:
+            sql = "INSERT INTO students (name, age, class) VALUES (%s, %s, %s)"
+            self.cursor.execute(sql, (name, age, class_name))
+            self.connection.commit()
+            print(f"成功添加学生：{name}")
+            return True
+        except Exception as e:
+            print(f"添加失败：{e}")
+            self.connection.rollback()
+            return False
+
+    def delete_student(self, student_id):
+        """删除学生数据（根据ID）"""
+        try:
+            sql = "DELETE FROM students WHERE id = %s"
+            self.cursor.execute(sql, (student_id,))
+            if self.cursor.rowcount > 0:
+                self.connection.commit()
+                print(f"成功删除ID为 {student_id} 的学生")
+                return True
+            else:
+                print(f"⚠️ 未找到ID为 {student_id} 的学生")
+                return False
+        except Exception as e:
+            print(f"删除失败：{e}")
+            self.connection.rollback()
+            return False
+
+    def update_student(self, student_id, name=None, age=None, class_name=None):
+        """更新学生数据（可以只更新部分字段）"""
+        try:
+            # 构建动态更新语句
+            updates = []
+            params = []
+            if name:
+                updates.append("name = %s")
+                params.append(name)
+            if age:
+                updates.append("age = %s")
+                params.append(age)
+            if class_name:
+                updates.append("class = %s")
+                params.append(class_name)
+
+            if not updates:
+                print("没有需要更新的字段")
+                return False
+
+            params.append(student_id)
+            sql = f"UPDATE students SET {', '.join(updates)} WHERE id = %s"
+
+            self.cursor.execute(sql, params)
+            if self.cursor.rowcount > 0:
+                self.connection.commit()
+                print(f"成功更新ID为 {student_id} 的学生信息")
+                return True
+            else:
+                print(f"⚠️ 未找到ID为 {student_id} 的学生")
+                return False
+        except Exception as e:
+            print(f"更新失败：{e}")
+            self.connection.rollback()
+            return False
+
+    def query_all_students(self):
+        """查询所有学生，显示所有列"""
+        try:
+            # 明确选择所有列（id在最前面）
+            self.cursor.execute("SELECT id, name, age, class FROM students")
+            # 或者用 * 也表示所有列
+            # self.cursor.execute("SELECT * FROM students")
+
+            results = self.cursor.fetchall()
+            if results:
+                print("\n所有学生列表：")
+                print("ID\t姓名\t年龄\t班级")  # 这里ID在最前面
+                print("-" * 40)
+                for row in results:
+                    print(f"{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}")
+                return results
+            else:
+                print("📭 暂无学生数据")
+                return []
+        except Exception as e:
+            print(f" 查询失败：{e}")
+            return []
+
+    def query_by_name(self, name):
+        """根据姓名查询学生"""
+        try:
+            sql = "SELECT * FROM students WHERE name LIKE %s"
+            self.cursor.execute(sql, (f'%{name}%',))
+            results = self.cursor.fetchall()
+            if results:
+                print(f"\n查找包含'{name}'的学生：")
+                print("ID\t姓名\t年龄\t班级")
+                print("-" * 40)
+                for row in results:
+                    print(f"{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}")
+                return results
+            else:
+                print(f"未找到包含'{name}'的学生")
+                return []
+        except Exception as e:
+            print(f"查询失败：{e}")
+            return []
+
+
+def main():
+    """主程序 - 交互式菜单"""
+    manager = StudentManager()
+
+    while True:
+        print("\n" + "=" * 50)
+        print("学生信息管理系统")
+        print("=" * 50)
+        print("1. 添加学生")
+        print("2. 删除学生（按ID）")
+        print("3. 更新学生信息（按ID）")
+        print("4. 查询所有学生")
+        print("5. 按姓名搜索学生")
+        print("6. 退出系统")
+        print("=" * 50)
+
+        choice = input("请选择操作（1-6）：")
+
+        if choice == '1':
+            name = input("请输入姓名：")
+            age = int(input("请输入年龄："))
+            class_name = input("请输入班级：")
+            manager.add_student(name, age, class_name)
+
+        elif choice == '2':
+            try:
+                student_id = int(input("请输入要删除的学生ID："))
+                manager.delete_student(student_id)
+            except ValueError:
+                print("请输入正确的数字ID")
+
+        elif choice == '3':
+            try:
+                student_id = int(input("请输入要更新的学生ID："))
+                print("（直接回车表示不修改该字段）")
+                name = input("请输入新姓名：") or None
+                age_input = input("请输入新年龄：")
+                age = int(age_input) if age_input else None
+                class_name = input("请输入新班级：") or None
+                manager.update_student(student_id, name, age, class_name)
+            except ValueError:
+                print("年龄请输入正确的数字")
+
+        elif choice == '4':
+            manager.query_all_students()
+
+        elif choice == '5':
+            name = input("请输入要搜索的姓名（支持模糊搜索）：")
+            manager.query_by_name(name)
+
+        elif choice == '6':
+            manager.close()
+            print("感谢使用，再见！")
+            break
+
+        else:
+            print("无效输入，请重新选择")
+
+
+if __name__ == "__main__":
+    main()
