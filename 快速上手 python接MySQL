@@ -1,51 +1,99 @@
-以学生登记表为例
-一、在MySQL中创建数据库和表
-windows+r打开cmd
--- 1. 登录MySQL（输入你的密码）
+# 🗄️ 快速上手 Python 连接 MySQL
+
+> 以学生登记表为例，从零搭建一个学生信息管理系统。
+
+---
+
+## 一、在 MySQL 中创建数据库和表
+
+> <kbd>Win</kbd> + <kbd>R</kbd> 打开 cmd，执行以下命令：
+
+### 1. 登录 MySQL
+
+```bash
 mysql -u root -p
+```
 
--- 2. 创建数据库（叫 student_db 吧）
+> 输入你的 MySQL 密码登录。
+
+### 2. 创建数据库
+
+```sql
 CREATE DATABASE student_db;
+```
 
--- 3. 切换到该数据库
+### 3. 切换到该数据库
+
+```sql
 USE student_db;
+```
 
--- 4. 创建学生表（包含id、姓名、年龄、班级）
+### 4. 创建学生表
+
+```sql
 CREATE TABLE students (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     age INT,
     class VARCHAR(20)
 );
+```
 
--- 5. 插入几条测试数据
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `id` | INT (自增) | 学号，主键 |
+| `name` | VARCHAR(50) | 姓名，不能为空 |
+| `age` | INT | 年龄 |
+| `class` | VARCHAR(20) | 班级 |
+
+### 5. 插入测试数据
+
+```sql
 INSERT INTO students (name, age, class) VALUES ('张三', 20, '计算机1班');
 INSERT INTO students (name, age, class) VALUES ('李四', 22, '计算机2班');
+```
 
--- 6. 查询一下确认数据
+### 6. 查询确认
+
+```sql
 SELECT * FROM students;
+```
 
--- 7. 退出MySQL（输入exit或按Ctrl+C）
+### 7. 退出 MySQL
+
+```sql
 exit;
+```
 
-二、安装python驱动
-在cmd中执行：
+---
+
+## 二、安装 Python 驱动
+
+在 cmd 中执行：
+
+```bash
 pip install pymysql
+```
 
-三、编写Python程序
+---
+
+## 三、编写 Python 程序
+
+### 完整代码：学生信息管理系统
+
+```python
 import pymysql
 
 
 class StudentManager:
     def __init__(self):
         """初始化数据库连接"""
-        # 配置数据库连接信息（根据你的实际情况修改）
         self.connection = pymysql.connect(
-            host='localhost',  # 数据库在本机
-            user='root',  # 你的MySQL用户名
-            password='123456',  # 你的MySQL密码（改成你自己的）
+            host='localhost',       # 数据库在本机
+            user='root',            # 你的 MySQL 用户名
+            password='123456',      # 你的 MySQL 密码（改成你自己的）
             database='student_db',  # 刚创建的数据库名
-            charset='utf8mb4'  # 支持中文
+            charset='utf8mb4'       # 支持中文
         )
         self.cursor = self.connection.cursor()
         print("数据库连接成功！")
@@ -55,9 +103,14 @@ class StudentManager:
         self.cursor.close()
         self.connection.close()
         print("连接已关闭")
+```
 
+### 增删改查操作
+
+#### ➕ 添加学生
+
+```python
     def add_student(self, name, age, class_name):
-        """添加学生数据"""
         try:
             sql = "INSERT INTO students (name, age, class) VALUES (%s, %s, %s)"
             self.cursor.execute(sql, (name, age, class_name))
@@ -68,9 +121,12 @@ class StudentManager:
             print(f"添加失败：{e}")
             self.connection.rollback()
             return False
+```
 
+#### ➖ 删除学生
+
+```python
     def delete_student(self, student_id):
-        """删除学生数据（根据ID）"""
         try:
             sql = "DELETE FROM students WHERE id = %s"
             self.cursor.execute(sql, (student_id,))
@@ -79,17 +135,19 @@ class StudentManager:
                 print(f"成功删除ID为 {student_id} 的学生")
                 return True
             else:
-                print(f"⚠️ 未找到ID为 {student_id} 的学生")
+                print(f"未找到ID为 {student_id} 的学生")
                 return False
         except Exception as e:
             print(f"删除失败：{e}")
             self.connection.rollback()
             return False
+```
 
+#### ✏️ 更新学生
+
+```python
     def update_student(self, student_id, name=None, age=None, class_name=None):
-        """更新学生数据（可以只更新部分字段）"""
         try:
-            # 构建动态更新语句
             updates = []
             params = []
             if name:
@@ -115,38 +173,40 @@ class StudentManager:
                 print(f"成功更新ID为 {student_id} 的学生信息")
                 return True
             else:
-                print(f"⚠️ 未找到ID为 {student_id} 的学生")
+                print(f"未找到ID为 {student_id} 的学生")
                 return False
         except Exception as e:
             print(f"更新失败：{e}")
             self.connection.rollback()
             return False
+```
 
+#### 📖 查询所有学生
+
+```python
     def query_all_students(self):
-        """查询所有学生，显示所有列"""
         try:
-            # 明确选择所有列（id在最前面）
             self.cursor.execute("SELECT id, name, age, class FROM students")
-            # 或者用 * 也表示所有列
-            # self.cursor.execute("SELECT * FROM students")
-
             results = self.cursor.fetchall()
             if results:
                 print("\n所有学生列表：")
-                print("ID\t姓名\t年龄\t班级")  # 这里ID在最前面
+                print("ID\t姓名\t年龄\t班级")
                 print("-" * 40)
                 for row in results:
                     print(f"{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}")
                 return results
             else:
-                print("📭 暂无学生数据")
+                print("暂无学生数据")
                 return []
         except Exception as e:
-            print(f" 查询失败：{e}")
+            print(f"查询失败：{e}")
             return []
+```
 
+#### 🔍 按姓名搜索
+
+```python
     def query_by_name(self, name):
-        """根据姓名查询学生"""
         try:
             sql = "SELECT * FROM students WHERE name LIKE %s"
             self.cursor.execute(sql, (f'%{name}%',))
@@ -164,10 +224,12 @@ class StudentManager:
         except Exception as e:
             print(f"查询失败：{e}")
             return []
+```
 
+### 主程序：交互式菜单
 
+```python
 def main():
-    """主程序 - 交互式菜单"""
     manager = StudentManager()
 
     while True:
@@ -227,3 +289,26 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
+
+---
+
+## 运行效果预览
+
+```
+==================================================
+学生信息管理系统
+==================================================
+1. 添加学生
+2. 删除学生（按ID）
+3. 更新学生信息（按ID）
+4. 查询所有学生
+5. 按姓名搜索学生
+6. 退出系统
+==================================================
+请选择操作（1-6）：
+```
+
+---
+
+> 🗄️ **快速上手 Python 接 MySQL** — 由 Echo 🔥 美化整理
