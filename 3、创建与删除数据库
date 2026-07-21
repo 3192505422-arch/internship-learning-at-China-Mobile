@@ -1,14 +1,33 @@
-一、创建数据库
-CREATE DATABASE//创建数据库关键字
-数据库名称
-DEFAULT CHARACTER SET//指定默认编码类型关键字
-指定编码；
+# 🏗️ 创建与删除数据库
 
-show databases；//查看数据库
+## 一、创建数据库
 
-二、删除数据库
-DROP DATABASE//删除数据库关键字
-数据库名称；
+```sql
+CREATE DATABASE 数据库名称
+    DEFAULT CHARACTER SET 指定编码;
+```
 
-三、选择数据库
-USE 数据库名；
+> `CREATE DATABASE` — 创建数据库关键字
+> `DEFAULT CHARACTER SET` — 指定默认编码类型
+
+### 查看数据库
+
+```sql
+SHOW DATABASES;
+```
+
+---
+
+## 二、删除数据库
+
+```sql
+DROP DATABASE 数据库名称;
+```
+
+---
+
+## 三、选择/切换数据库
+
+```sql
+USE 数据库名;
+```
