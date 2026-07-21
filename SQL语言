@@ -1,0 +1,11 @@
+SQL是数据库标准化语言，所有关系型数据库都适用。
+
+一、SQL语言语法
+1、SQL语句不区分大小写，关键字建议大写。
+2、SQL语句可以单行或多行书写，以分号结尾。
+
+DQL数据查询语言：SELECT、FROM、WHERE、ORDER BY、HAVING
+DML数据操作语言（针对表中的数据）：INSERT添加数据、UPDATE更新数据、DELETE删除数据
+DDL数据定义语言（针对数据库对象，比如数据库database、表table、索引index、视图view、存储过程procedure、触发器trigger）：CREATE创建数据库对象、ALTER修改数据库对象、DROP删除数据库对象
+DCL数据控制语言：GRANT授予用户某种权限、REVOKE回收授予的某种权限
+TCL事务控制语言：COMMIT提交事务、ROLLBACK回滚事务、SAVEPOINT设置回滚点
