@@ -48,3 +48,15 @@ ALTER TABLE 表名 ADD CONSTRAINT 约束名 UNIQUE（列名）；
 七、删除唯一性约束
 使用DDL语句删除唯一性约束：
 ALTER TABLE 表名 DROP KEY 约束名；
+
+八、修改表添加非空约束
+使用DDL语句添加非空约束：
+ALTER TABLE 表名 MODIFY 列名 类型 NOT NALL;
+
+九、删除非空约束
+使用DDL语句删除非空约束：
+ALTER TABLE 表名 MONDIFY 列名 类型 NULL；
+
+十、创建表时添加约束
+查询表中的约束信息：
+SHOW KEYS FROM 表名；
