@@ -32,3 +32,7 @@ ALTER TABLE 表名 DROP PRIMARY KEY;
 *删除主键时，如果主键列具备自动增长能力，需要先去掉自动增长，然后再删除主键。
 去掉主键约束：
 ALTER TABLE 表名 MODIFY 列名（格式）；
+
+四、修改表添加外键约束
+使用DDL语句添加外键约束：
+ALTER TABLE 表名 ADD CONSTRAINT 约束名 FOREIGN KEY （列名） REFERENCES 参照的表名（参照的列名）；
