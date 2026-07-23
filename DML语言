@@ -1,0 +1,21 @@
+一、添加数据（INSERT）
+1、选择插入：INSERT INTO 表名（列名1，列名2，列名3...）VALUES（值1，值2，值3...）；
+2、完全插入：INSERT INTO 表名 VALUES（值1，值2，值3...）；//如果主键是自动增长，需要使用default或者null或者0占位。
+
+二、默认值处理（DEFAULT）
+在MySQL中可以使用DEFAULT为列设定一个默认值，如果插入数据时并未指定该列的值，那么MySQL会将默认值添加到该列中。
+1、创建表时指定列的默认值：CREATE TABLE 表名（列名 类型 default 默认值...）
+2、修改表添加新列并指定默认值：ALTER TABLE 表名 ADD COLUMN 列名 类型 DEFAULT 默认值；
+3、插入数据时的默认值处理：如果在插入数据时并未指定该列的值，那么MySQL会将默认值添加到该列中。如果是完全项插入需要使用default来占位。
+
+三、更新数据（UPDATE）
+UPDATE 表名 SET 列名=值，列名=值 WHERE 条件；//更新语句中一定要给定更新条件，否则表中的所有数据都会被更新。
+
+四、删除数据（DELETE）
+1、DELETE删除表格：DELETE FROM 表名 WHERE 条件；
+2、TRUNCATE清空表：TRUNCATE TABLE 表名；
+
+清空表时DELETE与TRUNCATE区别
+1、truncate是整体删除（速度较快），delete是逐条删除（速度较慢）。
+2、truncate不写服务器log，delete写服务器log，也就是truncate效率比delete高的原因。
+3、truncate是会重置自增值，相当于自增列会被置为初始值，又重新从1开始记录，而不是接着原来的值。而delete删除以后，自增值仍然会继续累加。
