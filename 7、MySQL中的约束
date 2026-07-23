@@ -36,3 +36,15 @@ ALTER TABLE 表名 MODIFY 列名（格式）；
 四、修改表添加外键约束
 使用DDL语句添加外键约束：
 ALTER TABLE 表名 ADD CONSTRAINT 约束名 FOREIGN KEY （列名） REFERENCES 参照的表名（参照的列名）；
+
+五、删除外键约束
+使用DDL语句删除外键约束：
+ALTER TABLE 表名 DROP FOREIGN KEY 约束名；
+
+六、修改表添加唯一性约束
+使用DDL语句添加唯一性约束：
+ALTER TABLE 表名 ADD CONSTRAINT 约束名 UNIQUE（列名）；
+
+七、删除唯一性约束
+使用DDL语句删除唯一性约束：
+ALTER TABLE 表名 DROP KEY 约束名；
