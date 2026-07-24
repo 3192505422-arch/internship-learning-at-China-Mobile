@@ -1,0 +1,6 @@
+一、相同的行
+SELECT默认显示所有的行，包括相同的行。
+
+二、去除相同的行
+在SELECT子句中用DISTINCT关键字除去相同的行：
+SELECT DISTINCT 列名 FROM 表名；
