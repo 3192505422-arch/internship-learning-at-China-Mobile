@@ -7,4 +7,4 @@ SELECT 列 FROM 表；
 
 二、算术表达式中的空值
 包含空值的算术表达式计算结果为空：
-SELECT 列名 FROM 表名；
+SELECT 列名 FROM 表名；//列名可以通过式子计算
