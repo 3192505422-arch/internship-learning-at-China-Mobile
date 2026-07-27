@@ -1,0 +1,34 @@
+一、MySQL中的比较条件
+=：等于
+>:大于
+>=:大于等于
+<:小于
+<=:小于等于
+<>/!=:不等于
+SELECT 列名 FROM 表名 WHERE 条件；
+
+二、其它比较条件
+BETWEEN...AND...:在两个值之间（包含）
+IN(set)：匹配一个任意值列表
+LIKE:匹配一个字符模板
+IS NULL:是一个空值
+
+1、使用BETWEEN条件
+使用BETWEEN条件显示上下限之间的行
+SELECT 列名 FROM 表名 WHERE BETWEEN 下限 AND 上限；
+
+2、使用IN条件
+SELECT 列名 FROM 表名 IN （条件，条件，条件）；
+
+3、使用LIKE条件
+执行有效搜索串值的通配符搜索
+搜索条件既可以包含文字也可以包含数字：
+%表示零个或多个字符
+_表示一个字符
+SELECT 列名 FROM 表名 WHERE ...LIKE ‘..._/%’；
+
+4、使用NULL条件
+用IS NULL操作来测试空值：
+SELECT 列名 FROM 表名 WHERE ... IS NULL；
+NULL条件：包括IS NULL和IS NOT NULL。
+IS NULL条件用于空值测试，空值的意思是难以获得的、未指定的、未知的或者不适用的。因此不能用“=”，因为null不能等于或不等于任何值。
