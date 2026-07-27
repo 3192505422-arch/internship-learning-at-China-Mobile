@@ -28,9 +28,42 @@ CONCAT(s1，s2...sn):字符串s1，s2等多个字符串合并为一个字符串
 eg：合并多个字符串SELECT CONCAT("sxt","teacher","oldlu");
 LPAD(s1,len,s2):在字符串s1的开始处填充字符串s2，使字符串长度达到len
 eg:将字符串x填充到abc字符串的开始处：SELECT LPAD('oldlu',8,'x');--xxxoldlu
-LTRIM(s):去掉
-REPLACE(s,s1,s2):
-REVERSE(s):
-RPAD(s1,len,s2):
-RTRIM(s):
-SUBSTR(s,start,length):
+LTRIM(s):去掉字符串s2替代字符串s中的字符串s1
+eg：去掉字符串oldlu开始处的空格：SELECT LTRIM("  oldlu")；
+REPLACE(s,s1,s2):将字符串s2替代字符串s中的字符串s1
+eg：将字符串oldlu中的字符o替换为字符O：SELECT REPLACE('oldlu'，'o','O');
+REVERSE(s):将字符串s的顺序反过来
+eg：将字符串abc的顺序反过来：SELECT REVERSE('abc');
+RPAD(s1,len,s2):在字符串s1的结尾处添加字符串s2，使字符串的长度达到len
+eg：将字符串xx填充到oldlu字符串的结尾处：SELECT RPAD('oldlu'，8，'x')；
+RTRIM(s):去掉字符串s结尾处的空格
+eg：去掉字符串oldlu  的末尾空格：SELECT RTRIM('oldlu  ')；
+SUBSTR(s,start,length):从字符串s的start位置截取长度为length的子字符串
+eg：从字符串OLDLU中的第2个位置截取3个字符：SELECT SUBSTR("OLDLU",2,3);
+SUBSTRING(s，start，length)：从字符串s的start位置截取长度为length的子字符串
+eg：从字符串OLDLU中的第2个位置截取3个字符：SELECT SUBSTRING("OLDLU",2,3);
+TRIM(s)：去掉字符串s开始和结尾处的空格
+eg：去掉字符串  oldlu  的首位空格：SELECT TRIM('  oldlu  ');
+3、数字函数
+ABS(x):返回x的绝对值
+eg：返回-1的绝对值：SELECT ABS（-1）；
+ACOS(x):求x的反余弦值（参数是弧度）
+eg：SELECT ACOS（0.25）；
+ASIN(x):求反正弦值（参数是弧度）
+eg：SELECT ASIN（0.25）；
+ATAN(x):求反正切值（参数是弧度）
+eg：SELECT ATAN(2.5);
+ATAN2(n,m):求反正切值（参数是弧度）
+eg：SELECT ATAN2（-0.8，2）；
+AVG(expression):返回一个表达式的平均值，expression是一个字段
+eg：返回Products表中Price字段的平均值：SELECT AVG(Price)AS AveragePrice FROM Products；
+CEIL(x):返回大于或等于x的最小整数
+eg：SELECT CEIL(1.5);--返回2
+CEILING(x):返回大于或等于x的最小整数
+eg：SELECT CEIL(1.5)--返回2
+COS(x):求余弦值（参数是弧度）
+eg：SELECT COS（2）；
+COT(x):求余切值（参数是弧度）
+eg：SELECT COT(6)；
+COUNT(expression):返回查询的记录总数，expression参数是一个字段或者*号
+eg：返回Products表中products字段总共有多少条记录：SELECT COUNT(ProductID)AS NumberOfProducts FROM Products;
