@@ -67,3 +67,18 @@ COT(x):求余切值（参数是弧度）
 eg：SELECT COT(6)；
 COUNT(expression):返回查询的记录总数，expression参数是一个字段或者*号
 eg：返回Products表中products字段总共有多少条记录：SELECT COUNT(ProductID)AS NumberOfProducts FROM Products;
+DEGREES(x):将弧度转换为角度
+eg：SELECT DEGREES(3.1415926535898)--180
+n DIV m:整除，n为被除数，m为除数
+eg：计算10除以5：SELECT 10 DIV 5;
+EXP(x):返回e的x次方
+eg：计算e的三次方：SELECT EXP(3)--20.085536923188
+FLOOR(x):返回小于或等于x的最大整数
+eg：小于或等于1.5的整数：SELECT FLOOR(1.5)--返回1
+GREATEST(expr1,expr2,expr3,...):返回列表中的最大值
+eg：返回以下数字列表中的最大值：SELECT GREATEST(3.12,34,8,25);--34
+返回以下字符串列表中的最大值：SELECT GREATEST("Google","Runoob","Apple")--Runoob
+LEAST(expr1,expr2,expr3,...):
+LN:
+LOG(x)或LOG(base,x):
+LOG10(x):
