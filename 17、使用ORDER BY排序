@@ -1,0 +1,20 @@
+1、用ORDER BY子句排序行
+ASC：升序排序，默认
+DESC：降序排序
+2、ORDER BY子句在SELECT语句的最后
+SELECT 列名 FROM 表名 ORDER BY 列名；
+在一个不明确的查询结果中排序返回的行。ORDER BY子句用于排序。如果使用了ORDER BY子句，它必须位于SQL语句的最后。
+
+一、SELECT语句的执行顺序如下
+FROM子句
+WHERE子句
+SELECT子句
+ORDER BY子句
+
+二、使用别名排序
+SELECT 列名 FROM 表名 ORDER BY 列名；
+
+三、多列排序
+ORDER BY列表的顺序就是排序的顺序
+SELECT 列名 FROM 表名 ORDER BY 列名，列名；
+可以排序一个不在SELECT列表中的列
