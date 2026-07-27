@@ -1,0 +1,36 @@
+一、函数介绍
+输入：参数1、参数2...参数n→函数（执行作用）→结果值
+SQL函数有输入参数并且总有一个返回值。
+
+二、函数分类
+1、单行函数：仅对单个进行运算，并且每行返回一个结果
+操纵数据项
+接受多个参数并返回一个值
+作用于每一个返回行
+每行返回一个结果
+可以修改数据类型
+可以嵌套
+接受多个参数，参数可以是一个列或者一个表达式
+FUNCTION_NAME[(参数1，参数2，...)]
+常见的函数类型：字符、数字、日期、转换
+2、多行函数：能够操作成组的行，每个行组给出一个结果，这些函数也被称为组函数。
+
+三、字符函数
+1、大小写处理函数
+（1）LOWER(s)|LCASE(s)：将字符串s转换为小写
+eg：将字符串OLDLU转换为小写：SELECT LOWER（“OLDLU”）；
+（2）UPPER(s)|UCASE(s)：将字符串s转换为大写
+eg：将字符串oldlu转换为大写：SELECT UPPER("oldlu")；
+2、字符处理函数
+LENGTH(s)：返回字符串s的长度
+eg：返回字符串oldlu的字符数：SELECT CHAR_LENGTH("RUNOOB");
+CONCAT(s1，s2...sn):字符串s1，s2等多个字符串合并为一个字符串
+eg：合并多个字符串SELECT CONCAT("sxt","teacher","oldlu");
+LPAD(s1,len,s2):在字符串s1的开始处填充字符串s2，使字符串长度达到len
+eg:将字符串x填充到abc字符串的开始处：SELECT LPAD('oldlu',8,'x');--xxxoldlu
+LTRIM(s):去掉
+REPLACE(s,s1,s2):
+REVERSE(s):
+RPAD(s1,len,s2):
+RTRIM(s):
+SUBSTR(s,start,length):
