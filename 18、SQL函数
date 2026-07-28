@@ -21,6 +21,7 @@ FUNCTION_NAME[(参数1，参数2，...)]
 eg：将字符串OLDLU转换为小写：SELECT LOWER（“OLDLU”）；
 （2）UPPER(s)|UCASE(s)：将字符串s转换为大写
 eg：将字符串oldlu转换为大写：SELECT UPPER("oldlu")；
+
 2、字符处理函数
 LENGTH(s)：返回字符串s的长度
 eg：返回字符串oldlu的字符数：SELECT CHAR_LENGTH("RUNOOB");
@@ -44,6 +45,7 @@ SUBSTRING(s，start，length)：从字符串s的start位置截取长度为length
 eg：从字符串OLDLU中的第2个位置截取3个字符：SELECT SUBSTRING("OLDLU",2,3);
 TRIM(s)：去掉字符串s开始和结尾处的空格
 eg：去掉字符串  oldlu  的首位空格：SELECT TRIM('  oldlu  ');
+
 3、数字函数
 ABS(x):返回x的绝对值
 eg：返回-1的绝对值：SELECT ABS（-1）；
@@ -78,7 +80,124 @@ eg：小于或等于1.5的整数：SELECT FLOOR(1.5)--返回1
 GREATEST(expr1,expr2,expr3,...):返回列表中的最大值
 eg：返回以下数字列表中的最大值：SELECT GREATEST(3.12,34,8,25);--34
 返回以下字符串列表中的最大值：SELECT GREATEST("Google","Runoob","Apple")--Runoob
-LEAST(expr1,expr2,expr3,...):
-LN:
-LOG(x)或LOG(base,x):
-LOG10(x):
+LEAST(expr1,expr2,expr3,...):返回列表中的最小值
+eg：返回以下数字列表中的最小值：SELECT LEAST(3.12,34,8,25);--3
+返回以下字符串列表中的最大值：SELECT LEAST("Google","Runoob","Apple")--Apple
+LN:返回数字的自然对数，以e为底
+eg：返回2的自然对数：SELECT LN（2）；
+LOG(x)或LOG(base,x):返回自然对数（以e为底的对数），如果带有base为指定带底数
+eg：SELECT LOG(20.085536923188);
+LOG10(x):返回以10为底的对数
+eg：SELECT LOG10(100);
+LOG2(x):返回以10为底的对数
+eg：返回以2为底6的对数：SELECT LOG2(6);
+MAX(expression)：返回字段expression中的最大值
+eg：返回数据表Products中字段Price的最大值：SELECT MAX(Price)AS LargestPrice FROM Products；
+MIN（expression）：返回字段expression中的最小值
+eg：返回数据表Products中字段Price的最小值：SELECT MIN(Price)AS MinPrice FROM Products；
+MOD（x,y）：返回x除以y以后的余数
+eg：5除以2的余数：SELECT MOD（5，2）;
+PI（）：返回圆周率（3.141593）
+eg：SELECT PI();
+POW(x，y)：返回x的y次方
+eg：2的3次方：SELECT POW(2,3);
+POWER(x，y)：返回x的y次方
+eg：2的3次方：SELECT POWER(2,3);
+RADIAN(x)：将角度转换为弧度
+eg：180度转换为弧度：SELECT RADIANS(180);
+RAND():返回0到1的随机数
+eg：SELECT RAND();
+ROUND(x)：返回x的符号，x是负数、0、正数分别返回-1、0和1
+eg：SELECT SIGN(-10);
+SIN（x）：求正弦值（参数是弧度）
+eg：SELECT SIN(RADIANS(30));
+SQRT(x):返回x的平方根
+eg：25的平方根：SELECT SQRT(25);
+SUM(expression)：返回指定字段的总和
+eg：计算OrderDetails表中字段Quantity的总和：SELECT SUM(Quantity)AS TotalltemsOrdered FROM OrderDetails;
+TAN（x）：求正切值（参数是弧度）
+eg:SELECT TAN(1.75);
+TRUNCATE(x,y):返回数值x保留到小数点后y位的值（与ROUND最大的区别是不会进行四舍五入）
+eg：SELECT TRUNCATE(1.23456,3);
+
+ROUND函数：四舍五入列、表达式或者n位小数的值。如果第二个参数是0或者缺少，值被四舍五入为整数。如果第二个参数是2值被四舍五入为两位小数。如果第二个参数是-2，值被四舍五入到小数点左边两位。
+SELECT ROUND(45.923,2);-->45.92（四舍五入）
+SELECT ROUND(45.923,0);-->46
+SELECT ROUND(45.923,-1);-->50
+
+TRUNCATE函数：类似于ROUND函数。如果第二个参数是0或者缺少，值被截断为整数。如果第二个参数是2，值被截断为两位小数。如果第二个参数是-2，值被截断到小数点左边两位。与ROUND最大的区别是不会进入四舍五入。
+SELECT TRUNCATE（45.923，2）;-->45.92（只舍不进）
+
+MOD（m，n）函数：找出m除以n的余数
+SELECT MOD（5，2）;
+
+4、日期函数
+在MySQL中允许直接使用字符串表示日期，但是要求字符串的日期格式必须为：'YYY-MM-DD HH:MI:SS'或者'YYYY/MM/DD HH:MI:SS';
+CURDATE():返回当前日期
+eg：SELECT CURDATE();
+CURTIME():返回当前时间
+eg:SELECT CURTIME();
+CURRENT_DATE():返回当前日期
+eg:SELECT CURRENT_DATE();
+CURRENT_TIME():返回当前时间
+eg:SELECT CURRENT_TIME();
+DATE():从日期或日期时间表达式中提取日期值
+eg：SELECT DATE("2017-06-15");
+DATEDIFF(d1，d2):计算日期d1->d2之间相隔的天数
+eg：SELECT DATEDIFF('2001-01-01','2001-02-02')
+DAY(d)：返回日期值d的日期部分
+eg：SELECT DAY("2017-06-15");
+DAYNAME(d):返回日期d是星期几，如Monday，Tuesday
+eg：SELECT DAYNAME('2011-11-11 11:11:11');->Friday
+DAYOFMONTH(d):计算日期d是本月的第几天
+eg：SELECT DAYOFMONTH('2011-11-11 11:11:11');->11
+DAYOFWEEK(d):日期d今天是星期几，1星期日，2星期一，以此类推
+eg：SELECT DAYOFWEEK('2011-11-11 11:11:11');->6
+DAYOFYEAR(d):计算日期d是本年的第几天
+eg:SELECT DAYOFYEAR('2011-11-11 11:11:11');
+HOUR(t):返回t中的小时值
+eg：SELECT HOUR('1:2:3');->1
+LAST_DAY(d):返回给定日期的那一月份的最后一天
+eg：SELECT LAST_DAY("2017-06-20");
+MONTHNAME(d):返回日期中的月份名称，如November
+eg：SELECT MONTHNAME('2011-11-11 11:11:11');
+MONTH(d):返回日期d中的月份值，1到12
+eg：SELECT MONTH('2011-11-11 11:11:11');
+NOW():返回当前日期和时间
+eg：SELECT NOW();
+SECOND(t):返回t中的秒钟值
+eg：SELECT SECOND('1:2:3');
+SYSDATE():返回当前日期和时间
+eg：SELECT SYSDATE();
+TIMEDIFF(time1,time2):计算时间差值
+eg：SELECT TIMEDIFF("13:10:11","13:10:10");
+TO_DAYS(d):计算日期d距离0000年1月1日的天数
+eg：SELECT TO_DAYS('0001-01-01 01:01:01');
+WEEK(d):计算日期d是本年的第几个星期，范围是0到53
+eg：SELECT WEEK('2011-11-11 11:11:11');
+WEEKDAY(d):日期d是星期几，0表示星期一。1表示星期二
+eg：SELECT WEEKDAY("2017-06-15");
+WEEKOFYEAR(d):计算日期d是本年的第几个星期，范围是0到53
+eg：SELECT WEEKOFYEAR('2011-11-11 11:11:11');
+YEAR(d):返回年份
+eg：SELECT YEAR("2017-06-15");
+
+5、转换函数
+（1）隐式数据类型转换
+指MySQL服务器能够自动地进行类型转换，MySQL字符串日期格式为:'YYYY-MM-DD HH:MI:SS'或'YYYY/MM/DD HH:MI:SS';
+（2）显示数据类型转换
+指需要依赖转换函数来完成相关类型的转换
+eg：DATE_FORMAT（date,format）将日期转换成字符串；
+STR_TO_DATE（str，format）将字符串转换成日期；
+
+6、通用函数
+IF（expr,v1,v2）:如果表达式expr成立，返回结果v1；否则返回结果v2
+eg：SELECT IF(1>0,'正确','错误');->正确
+IFNULL(v1,v2):如果v1的值不为NULL，则返回v1;否则返回v2
+eg：SELECT IFNULL(null,'Hello World');
+ISNULL(expression):判断表达式是否为NULL
+eg:SELECT ISNULL(NULL);->1
+NULLIF(expr1,expr2):比较两个参数是否相同，如果参数expr1与expr2相等，返回NULL，否则返回expr1
+eg:SELECT NULLIF(25,25);
+COALESCE(expr1,expr2,...,expr_n):返回参数中的第一个非空表达式(从左向右)
+eg:SELECT COALESCE(NULL,NULL,NULL,'bjsxt.com',NULL,'google.com');
