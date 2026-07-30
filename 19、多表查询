@@ -71,3 +71,9 @@ SELECT 列名 FROM 表名 LEFT OUTER JOIN 表名 ON （列名=列名）；
 右边的表中即使没有与另一个表中匹配的行，该查询也会取回表中所有的行。
 SELECT 列名 FROM 表名 RIGHT OUTER JOIN 表名 ON （列名=列名）；
 8、全外连接
+可以使用union实现全完连接：
+UNION：可以将两个查询结果集合并，返回的行都是唯一的，如果对整个结果集合使用了DISTINCT。
+UNION ALL：只是简单的将两个结果合并后就返回。这样如果返回的两个结果集中有重复的数据，那么返回的结果集就会包含重复的数据了。
+（SELECT 投影列 FROM 表名 LEFT OUTER JOIN 表名 ON 连接条件）
+UNION
+（SELECT 投影列 FROM 表名 RIGHT OUTER JOIN 表名 ON 连接条件）
