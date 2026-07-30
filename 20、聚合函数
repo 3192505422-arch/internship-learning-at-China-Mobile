@@ -31,3 +31,14 @@ arg：参数类型可以是字符、数字、日期。
 4、MAX函数
 求分组中最大数据。
 arg：参数类型可以是字符、数字、日期。
+5、COUNT函数
+返回分组中的总行数。
+COUNT函数有三种格式：
+（1）COUNT(*):返回表中满足SELECT语句的所有列的行数，包括重复行，包括有空值列的行。
+（2）COUNT(expr):返回在列中的由expr指定的非空值的数。
+（3）COUNT(DISTINCT expr):返回在列中的由expr指定的唯一的非空值的数。
+使用DISTINCT关键字：
+（1）COUNT(DISTINCT expr)返回对于表达式expr非空并且值不相同的行数。
+（2）显示EMPLOYEES表中不同部门数的值。
+6、组函数和Null值
+在组函数中使用IFNULL函数
