@@ -16,3 +16,28 @@ GROUP BY子句中指定分组的所有薪水的平均值
 FROM子句指定数据库必须访问的表：EMPLOYEES表
 （3）WHERE子句指定被返回的行。因为无WHERE子句默认情况下所有行被返回。
 （4）GROUP BY子句指定行怎样被分组。行用部门号分组，所以AVE函数被应用于薪水列，以计算每个部门的水平薪水。
+
+三、在多列上使用分组
+SELECT 列名 FROM 表名 GROUP BY 分组依据；
+
+四、在组中分组
+可以列出多个GROUP BY列返回组和子组的摘要结果。可以用GROUP BY子句中的顺序确定结果的默认排序顺序。下面是SELECT语句中包含一个GROUP BY子句时的求值过程：
+（1）SELECT子句指定被返回的列：
+部门号在EMPLOYEES表中
+Job ID在EMPLOYEES表中
+在GROUP BY子句中指定的组中所有薪水的合计
+（2）FROM子句指定数据库必须访问的表：EMPLOYEES表。
+（3）GROUP BY子句指定你怎样分组行：
+首先，用部门号分组行。
+第二，在部门号的分组中再用job ID分组行。
+如此SUM函数被用于每个部门号分组中的所有job ID的salary列。
+
+五、约束分组结果
+HAVING子句是对查询出结果集分组后的结果进行过滤。
+
+六、约束分组结果
+用HAVING子句约束分组：
+1、行被分组
+2、应用组函数
+SELECT 列名 FROM 表名 WHERE 条件 GROUP BY 分组依据 HAVING 分组条件 ORDER BY 列名；
+HAVING子句是对分组后的结果进行过滤。
