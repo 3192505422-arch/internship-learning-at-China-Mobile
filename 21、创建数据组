@@ -2,9 +2,17 @@
 在没有进行数据分组之前，所有聚合函数是将结果集作为一个大的信息组进行处理。但是，有时，则需要将表的信息划分为较小的组，可以用GROUP BY子句实现。
 
 二、GROUP BY子句语法
+在SELECT列表中的不在组函数中的所有列必须在GROUP BY子句中。
 用GROUP BY子句划分表中的行到较小的组中：
 SELECT 列名 FROM 表名 WHERE 条件 GROUP BY 分组依据 ORDER BY 列名；
 原则
 （1）使用WHERE子句，可以在划分行成组以前过滤行。
 （2）如果有WHERE子句，那么GROUP BY子句必须在WHERE的子句后面。
 （3）在GROUP BY子句中必须包含列。
+下面是包含一个GROUP BY子句SELECT语句的求值过程；
+（1）SELECT子句指定要返回的列。
+（2）在EMPLOYEES表中的部门号
+GROUP BY子句中指定分组的所有薪水的平均值
+FROM子句指定数据库必须访问的表：EMPLOYEES表
+（3）WHERE子句指定被返回的行。因为无WHERE子句默认情况下所有行被返回。
+（4）GROUP BY子句指定行怎样被分组。行用部门号分组，所以AVE函数被应用于薪水列，以计算每个部门的水平薪水。
